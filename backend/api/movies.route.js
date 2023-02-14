@@ -1,6 +1,8 @@
 import express from 'express';
+import MoviesController from '../dao/movies.Controller.js';
 
 const router = express.Router();
-router.route('/').get((req, res) => res.send('Hello world'));
+
+router.route('/').get(MoviesController.apiGetMovies);
 
 export default router;
