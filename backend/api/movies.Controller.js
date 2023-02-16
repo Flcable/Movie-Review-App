@@ -1,4 +1,4 @@
-import MoviesDAO from './moviesDAO.js';
+import MoviesDAO from '../dao/moviesDAO.js';
 
 export default class MoviesController {
   static async apiGetMovies(req, res, next) {
@@ -28,5 +28,30 @@ export default class MoviesController {
       total_results: totalNumMovies,
     };
     res.json(response);
+  }
+
+  static async apiGetMovieById(req, res, next) {
+    try {
+      let id = req.params.id || {};
+      let movie = await MoviesDAO.apiGetMovieById(id);
+      if (!movie) {
+        res.status(500).json({ error: 'not found' });
+        return;
+      }
+      res.json(movie);
+    } catch (e) {
+      console.log(`api, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
+
+  static async apiGetRatings(req, res, next) {
+    try {
+      let propertyTypes = await MoviesDAO.getRatings();
+      res.json(propertyTypes);
+    } catch (e) {
+      console.log(`api,${e}`);
+      res.status(500).json({ error: e });
+    }
   }
 }

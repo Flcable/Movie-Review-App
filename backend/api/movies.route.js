@@ -1,10 +1,12 @@
 import express from 'express';
-import MoviesController from '../dao/movies.Controller.js';
+import MoviesController from './movies.Controller.js';
 import ReviewsController from './reviews.Controller.js';
 
 const router = express.Router();
 
 router.route('/').get(MoviesController.apiGetMovies);
+router.route('/id/:id').get(MoviesController.apiGetMovieById);
+router.route('/ratings').get(MoviesController.apiGetRatings);
 router
   .route('/review')
   .post(ReviewsController.apiPostReview)
